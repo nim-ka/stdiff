@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 		ranges[0].addr = 0xFFFFFFFF;
 		ranges[0].size = 0xFFFFFFFF;
 	}
-for (int i = 0; ranges[i].addr != 0xFFFFFFFF; i++) printf("%08x %08x\n", ranges[i].addr, ranges[i].size);
+
 	int diffs = 0;
 
 	unsigned long long int buf1;
@@ -100,12 +100,12 @@ for (int i = 0; ranges[i].addr != 0xFFFFFFFF; i++) printf("%08x %08x\n", ranges[
 		addr = ranges[curRange].addr;
 		size = ranges[curRange].size;
 
+		gzread(file1, &buf1, sizeof(buf1));
+		gzread(file2, &buf2, sizeof(buf2));
+
 		if (addr < i && i < addr + size) {
 			continue;
 		}
-
-		gzread(file1, &buf1, sizeof(buf1));
-		gzread(file2, &buf2, sizeof(buf2));
 
 		if (buf1 != buf2) {
 			diffs++;
